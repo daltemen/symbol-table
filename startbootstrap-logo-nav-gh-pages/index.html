@@ -32,6 +32,8 @@
 <!-- TEST FOR PDF -->
     <link rel="stylesheet" href="css/buttons.dataTables.min.css">
     
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+
     <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="js/pdfmake.min.js"></script>
@@ -91,19 +93,43 @@ $(document).ready(function() {
     } );
 
 
-    var counter = 1;
+    //var counter = 1;
  
     $('#addRow').on( 'click', function () {
         table.row.add( [
-            counter +'.1',
+            /*counter +'.1',
             counter +'.2',
             counter +'.3',
-            counter +'.4'
+            counter +'.4'*/
+            $('#identificador').val(),
+            $('#direccion').val(),
+            $('#tipo').val(),
+            $('#dimension').val(),
         ] ).draw( false );
+
+        $('#identificador').val("");
+        $('#direccion').val("");
+        $('#tipo').val("");
+        $('#dimension').val("");
+
  
-        counter++;
     } );
 
+
+    $('#example tbody').on( 'click', 'tr', function () {
+    if ( $(this).hasClass('selected') ) {
+        $(this).removeClass('selected');
+    }
+    else {
+        table.$('tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+    }
+    } );
+ 
+    $('#button').click( function () {
+
+        table.row('.selected').remove().draw( false );
+    } );
 
 
 } );
@@ -188,9 +214,9 @@ $(document).ready(function() {
                 </form>
             </div>
         </div>
-
+        
         <div class="row" >
-
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Eliminar</button>
            <table id="example" class="table table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
@@ -209,53 +235,7 @@ $(document).ready(function() {
                     </tr>
                 </tfoot>
                 <tbody>
-                    <!--<tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                    </tr>
-                    <tr>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td>San Francisco</td>
-                        <td>66</td>
-                    </tr>
-                    <tr>
-                        <td>Cedric Kelly</td>
-                        <td>Senior Javascript Developer</td>
-                        <td>Edinburgh</td>
-                        <td>22</td>
-
-                    </tr>
-                    <tr>
-                        <td>Airi Satou</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>33</td>
-
-                    </tr>
-                    <tr>
-                        <td>Brielle Williamson</td>
-                        <td>Integration Specialist</td>
-                        <td>New York</td>
-                        <td>61</td>
-
-                    </tr>
-                    <tr>
-                        <td>Herrod Chandler</td>
-                        <td>Sales Assistant</td>
-                        <td>San Francisco</td>
-                        <td>59</td>
-
-                    </tr>
-                    <tr>
-                        <td>Donna Snider</td>
-                        <td>Customer Support</td>
-                        <td>New York</td>
-                        <td>27</td>
-
-                    </tr>-->
+ 
                 </tbody>
             </table>
 
@@ -266,6 +246,33 @@ $(document).ready(function() {
 
 
 
+        </div>
+
+    
+
+
+            <!-- Button trigger modal 
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+          Launch demo modal
+        </button>-->
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+              </div>
+              <div class="modal-body">
+                ¿Está seguro que desea eliminar el registro?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="button">Eliminar</button>
+              </div>
+            </div>
+          </div>
         </div>
 
 
